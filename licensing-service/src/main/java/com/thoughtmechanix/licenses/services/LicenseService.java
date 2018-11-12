@@ -7,10 +7,6 @@ import com.thoughtmechanix.licenses.config.ServiceConfig;
 import com.thoughtmechanix.licenses.model.License;
 import com.thoughtmechanix.licenses.model.Organization;
 import com.thoughtmechanix.licenses.repository.LicenseRepository;
-import com.thoughtmechanix.licenses.utils.UserContext;
-import com.thoughtmechanix.licenses.utils.UserContextHolder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,14 +27,11 @@ public class LicenseService {
     @Autowired
     OrganizationRestTemplateClient organizationRestClient;
 
-    private static final Logger logger = LoggerFactory.getLogger(LicenseService.class);
 
-    @HystrixCommand
-    public License getLicense(String organizationId,String licenseId) throws InterruptedException {
-       License license = licenseRepository.findByOrganizationIdAndLicenseId(organizationId, licenseId);
+    public License getLicense(String organizationId,String licenseId) {
+        License license = licenseRepository.findByOrganizationIdAndLicenseId(organizationId, licenseId);
 
         Organization org = getOrganization(organizationId);
-
         return license
                 .withOrganizationName( org.getName())
                 .withContactName( org.getContactName())
@@ -75,7 +68,7 @@ public class LicenseService {
                     {@HystrixProperty(name = "coreSize",value="30"),
                      @HystrixProperty(name="maxQueueSize", value="10"),
                    },
-            commandProperties={        
+            commandProperties={
                      @HystrixProperty(name="circuitBreaker.requestVolumeThreshold", value="10"),
                      @HystrixProperty(name="circuitBreaker.errorThresholdPercentage", value="75"),
                      @HystrixProperty(name="circuitBreaker.sleepWindowInMilliseconds", value="7000"),
