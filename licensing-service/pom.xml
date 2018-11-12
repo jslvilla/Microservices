@@ -27,6 +27,7 @@
     </dependencies>
   </dependencyManagement>
 
+
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -40,6 +41,17 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-eureka</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-feign</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-config</artifactId>
@@ -49,6 +61,7 @@
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-config-client</artifactId>
     </dependency>
+
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
@@ -59,10 +72,10 @@
       <artifactId>postgresql</artifactId>
       <version>9.1-901.jdbc4</version>
     </dependency>
-      <dependency>
-        <groupId>org.springframework.security</groupId>
-        <artifactId>spring-security-rsa</artifactId>
-    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-rsa</artifactId>
+  </dependency>
   </dependencies>
 
   <properties>
@@ -71,7 +84,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <start-class>com.thoughtmechanix.licenses.Application</start-class>
     <docker.image.name>johncarnell/tmx-licensing-service</docker.image.name>
-    <docker.image.tag>chapter3</docker.image.tag>
+    <docker.image.tag>chapter4</docker.image.tag>
   </properties>
 
   <build>
