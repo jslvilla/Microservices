@@ -1,4 +1,9 @@
 spring:
+#    sleuth:
+#      sampler:
+#         percentage:  1
+  zipkin:
+    baseUrl:  localhost:9411
   cloud:
     stream:
       bindings:
@@ -6,10 +11,10 @@ spring:
           destination: orgChangeTopic
           content-type: application/json
           group: licensingGroup
-      kafka:
         binder:
           zkNodes: localhost
           brokers: localhost
+
 
 #        input:
 #          destination: orgChangeTopic
@@ -31,4 +36,3 @@ logging:
     com.netflix: WARN
     org.springframework.web: WARN
     com.thoughtmechanix: DEBUG
-

@@ -1,5 +1,5 @@
 # Introduction
-Welcome to Spring Microservices in Action, Chapter 8.  Chapter 8 demonstrates how to use Spring Cloud Stream messaging to asynchronously communicate messages between Spring Boot services. For this chapter, we will use Kafka as our message bus to transport messages between our services.
+ Welcome to Spring Microservices in Action, Chapter 9. Chapter 9 demonstrates how to use Spring Cloud Sleuth. Spring Cloud Sleuth introduces tracing information into your service calls. The tracing information can be used in conjuction with a log aggregation tool (Papertrail) to query log messages by one piece of their tracing information (the correlation id).  Also, we will be exploring how to do distributed tracing using Spring Cloud Sleuth and Zipkin.     
 
 By the time you are done reading this chapter you will have built and/or deployed:
 
@@ -16,23 +16,23 @@ post policies enforced on the calls.
 10. A Redis service to act as a distributed cache.
 
 # Software needed
-1.	Apache Maven (http://maven.apache.org). I used version 3.3.9 of the Maven. I chose Maven because, while other build tools like Gradle are extremely popular, Maven is still the pre-dominate build tool in use in the Java ecosystem. All of the code examples in this book have been compiled with Java version 1.8.
-2.	Docker (http://docker.com). I built the code examples in this book using Docker V1.12 and above. I am taking advantage of the embedded DNS server in Docker that came out in release V1.11. New Docker releases are constantly coming out so it's release version you are using may change on a regular basis.
-3.	Git Client (http://git-scm.com). All of the source code for this book is stored in a GitHub repository. For the book, I used version 2.8.4 of the git client.
+1.	[Apache Maven] (http://maven.apache.org). I used version 3.3.9 of the Maven. I chose Maven because, while other build tools like Gradle are extremely popular, Maven is still the pre-dominate build tool in use in the Java ecosystem. All of the code examples in this book have been compiled with Java version 1.8.
+2.	[Docker] (http://docker.com). I built the code examples in this book using Docker V1.12 and above. I am taking advantage of the embedded DNS server in Docker that came out in release V1.11. New Docker releases are constantly coming out so it's release version you are using may change on a regular basis.
+3.	[Git Client] (http://git-scm.com). All of the source code for this book is stored in a GitHub repository. For the book, I used version 2.8.4 of the git client.
 
-# Building the Docker Images for Chapter 8
-To build the code examples for Chapter 8 as a docker image, open a command-line window change to the directory where you have downloaded the chapter 8 source code.
+# Building the Docker Images for Chapter 9
+To build the code examples for Chapter 9 as a docker image, open a command-line window change to the directory where you have downloaded the Chapter 9 source code.
 
 Run the following maven command.  This command will execute the [Spotify docker plugin](https://github.com/spotify/docker-maven-plugin) defined in the pom.xml file.  
 
    **mvn clean package docker:build**
 
-This is the first chapter we will have multiple Spring projects that need to be be built and compiled.  Running the above command at the root of the project directory will build all of the projects.  If everything builds successfully you should see a message indicating that the build was successful.
+Running the above command at the root of the project directory will build all of the projects.  If everything builds successfully you should see a message indicating that the build was successful.
 
-# Running the services in Chapter 8
+# Running the services in Chapter 9
 
 Now we are going to use docker-compose to start the actual image.  To start the docker image,
-change to the directory containing  your chapter 8 source code.  Issue the following docker-compose command:
+change to the directory containing your chapter 9 source code.  Issue the following docker-compose command:
 
    **docker-compose -f docker/common/docker-compose.yml up**
 
