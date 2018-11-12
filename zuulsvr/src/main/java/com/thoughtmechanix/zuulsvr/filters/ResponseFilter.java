@@ -3,25 +3,20 @@ package com.thoughtmechanix.zuulsvr.filters;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ResponseFilter extends ZuulFilter{
     private static final int  FILTER_ORDER=1;
     private static final boolean  SHOULD_FILTER=true;
-    private static final Logger logger = LoggerFactory.getLogger(ResponseFilter.class);
-
 
     @Autowired
-    Tracer tracer;
+    FilterUtils filterUtils;
 
     @Override
     public String filterType() {
-        return "post";
+        return FilterUtils.POST_FILTER_TYPE;
     }
 
     @Override
@@ -37,7 +32,8 @@ public class ResponseFilter extends ZuulFilter{
     @Override
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
-        ctx.getResponse().addHeader("tmx-correlation-id", tracer.getCurrentSpan().traceIdString());
+
+        ctx.getResponse().addHeader(FilterUtils.CORRELATION_ID, filterUtils.getCorrelationId());
 
         return null;
     }

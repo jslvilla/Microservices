@@ -2,6 +2,7 @@ package com.thoughtmechanix.organization.utils;
 
 import org.springframework.http.HttpHeaders;
 
+
 public class UserContext {
     public static final String CORRELATION_ID = "tmx-correlation-id";
     public static final String AUTH_TOKEN     = "tmx-auth-token";

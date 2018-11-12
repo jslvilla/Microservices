@@ -4,6 +4,7 @@ package com.thoughtmechanix.organization.controllers;
 import com.thoughtmechanix.organization.events.source.SimpleSourceBean;
 import com.thoughtmechanix.organization.model.Organization;
 import com.thoughtmechanix.organization.services.OrganizationService;
+import com.thoughtmechanix.organization.utils.UserContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,8 @@ public class OrganizationServiceController {
 
     @RequestMapping(value="/{organizationId}",method = RequestMethod.GET)
     public Organization getOrganization( @PathVariable("organizationId") String organizationId) {
-        logger.debug("Entering the getOrganization() method for the organizationId: {}",organizationId);
+        logger.debug("Looking up data for org {}", organizationId);
+
         Organization org = orgService.getOrg(organizationId);
         org.setContactName(org.getContactName());
         return org;
@@ -44,7 +46,7 @@ public class OrganizationServiceController {
 
     @RequestMapping(value="/{organizationId}",method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteOrganization( @PathVariable("organizationId") String orgId) {
-        orgService.deleteOrg( orgId );
+    public void deleteOrganization( @PathVariable("orgId") String orgId,  @RequestBody Organization org) {
+        orgService.deleteOrg( org );
     }
 }

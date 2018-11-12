@@ -14,10 +14,10 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Override
     public void configure(HttpSecurity http) throws Exception{
         http
-        .authorizeRequests()
-          .antMatchers(HttpMethod.DELETE, "/v1/organizations/**")
-          .hasRole("ADMIN")
-          .anyRequest()
-          .authenticated();
+                .authorizeRequests()
+                .antMatchers(HttpMethod.DELETE, "/v1/organizations/**")
+                .hasRole("ADMIN")
+                .anyRequest()
+                .authenticated();
     }
 }

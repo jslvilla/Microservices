@@ -1,9 +1,4 @@
 spring:
-#    sleuth:
-#      sampler:
-#         percentage:  1
-  zipkin:
-    baseUrl:  localhost:9411
   cloud:
     stream:
       bindings:
@@ -15,11 +10,10 @@ spring:
           zkNodes: localhost
           brokers: localhost
 
-
-#        input:
-#          destination: orgChangeTopic
-#          content-type: application/json
-#          group: licensingGroup
+security:
+  oauth2:
+   resource:
+      userInfoUri: http://localhost:8901/auth/user
 
 eureka:
   instance:

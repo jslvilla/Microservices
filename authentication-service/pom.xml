@@ -86,10 +86,14 @@
       <artifactId>postgresql</artifactId>
       <version>9.1-901.jdbc4</version>
     </dependency>
-
       <dependency>
           <groupId>org.springframework.security</groupId>
           <artifactId>spring-security-rsa</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>com.netflix.hystrix</groupId>
+          <artifactId>hystrix-javanica</artifactId>
+          <version>1.5.9</version>
       </dependency>
   </dependencies>
 
@@ -99,7 +103,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <start-class>com.thoughtmechanix.authentication.Application</start-class>
     <docker.image.name>johncarnell/tmx-authentication-service</docker.image.name>
-    <docker.image.tag>chapter7</docker.image.tag>
+    <docker.image.tag>${env.BUILD_NAME}</docker.image.tag>
   </properties>
 
   <build>

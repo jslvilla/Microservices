@@ -3,6 +3,7 @@ package com.thoughtmechanix.zuulsvr.filters;
 import com.netflix.zuul.context.RequestContext;
 import org.springframework.stereotype.Component;
 
+
 @Component
 public class FilterUtils {
     public static final String CORRELATION_ID = "tmx-correlation-id";
@@ -12,7 +13,6 @@ public class FilterUtils {
     public static final String PRE_FILTER_TYPE = "pre";
     public static final String POST_FILTER_TYPE = "post";
     public static final String ROUTE_FILTER_TYPE = "route";
-
 
     public String getCorrelationId(){
         RequestContext ctx = RequestContext.getCurrentContext();
@@ -72,4 +72,6 @@ public class FilterUtils {
         if (ctx.get("serviceId")==null) return "";
         return ctx.get("serviceId").toString();
     }
+
+
 }

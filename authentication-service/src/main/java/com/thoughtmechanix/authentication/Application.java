@@ -8,12 +8,14 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootApplication
 @RestController
+@EnableEurekaClient
 @EnableResourceServer
 @EnableAuthorizationServer
 public class Application {
