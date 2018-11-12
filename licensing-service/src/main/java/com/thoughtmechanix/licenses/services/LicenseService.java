@@ -32,6 +32,7 @@ public class LicenseService {
         License license = licenseRepository.findByOrganizationIdAndLicenseId(organizationId, licenseId);
 
         Organization org = getOrganization(organizationId);
+
         return license
                 .withOrganizationName( org.getName())
                 .withContactName( org.getContactName())
@@ -66,9 +67,8 @@ public class LicenseService {
             threadPoolKey = "licenseByOrgThreadPool",
             threadPoolProperties =
                     {@HystrixProperty(name = "coreSize",value="30"),
-                     @HystrixProperty(name="maxQueueSize", value="10"),
-                   },
-            commandProperties={
+                     @HystrixProperty(name="maxQueueSize", value="10")},
+            commandProperties={         
                      @HystrixProperty(name="circuitBreaker.requestVolumeThreshold", value="10"),
                      @HystrixProperty(name="circuitBreaker.errorThresholdPercentage", value="75"),
                      @HystrixProperty(name="circuitBreaker.sleepWindowInMilliseconds", value="7000"),
