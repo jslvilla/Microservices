@@ -7,6 +7,7 @@ import com.thoughtmechanix.licenses.config.ServiceConfig;
 import com.thoughtmechanix.licenses.model.License;
 import com.thoughtmechanix.licenses.model.Organization;
 import com.thoughtmechanix.licenses.repository.LicenseRepository;
+import com.thoughtmechanix.licenses.utils.UserContext;
 import com.thoughtmechanix.licenses.utils.UserContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,7 @@ import java.util.UUID;
 
 @Service
 public class LicenseService {
-    private static final Logger logger = LoggerFactory.getLogger(LicenseService.class);
+
     @Autowired
     private LicenseRepository licenseRepository;
 
@@ -30,9 +31,11 @@ public class LicenseService {
     @Autowired
     OrganizationRestTemplateClient organizationRestClient;
 
+    private static final Logger logger = LoggerFactory.getLogger(LicenseService.class);
 
-    public License getLicense(String organizationId,String licenseId) {
-        License license = licenseRepository.findByOrganizationIdAndLicenseId(organizationId, licenseId);
+    @HystrixCommand
+    public License getLicense(String organizationId,String licenseId) throws InterruptedException {
+       License license = licenseRepository.findByOrganizationIdAndLicenseId(organizationId, licenseId);
 
         Organization org = getOrganization(organizationId);
 
@@ -59,18 +62,20 @@ public class LicenseService {
 
     private void sleep(){
         try {
-            Thread.sleep(11000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    @HystrixCommand(//fallbackMethod = "buildFallbackLicenseList",
+
+    @HystrixCommand(fallbackMethod = "buildFallbackLicenseList",
             threadPoolKey = "licenseByOrgThreadPool",
             threadPoolProperties =
                     {@HystrixProperty(name = "coreSize",value="30"),
-                     @HystrixProperty(name="maxQueueSize", value="10")},
-            commandProperties={
+                     @HystrixProperty(name="maxQueueSize", value="10"),
+                   },
+            commandProperties={        
                      @HystrixProperty(name="circuitBreaker.requestVolumeThreshold", value="10"),
                      @HystrixProperty(name="circuitBreaker.errorThresholdPercentage", value="75"),
                      @HystrixProperty(name="circuitBreaker.sleepWindowInMilliseconds", value="7000"),
@@ -78,7 +83,6 @@ public class LicenseService {
                      @HystrixProperty(name="metrics.rollingStats.numBuckets", value="5")}
     )
     public List<License> getLicensesByOrg(String organizationId){
-        logger.debug("LicenseService.getLicensesByOrg  Correlation id: {}", UserContextHolder.getContext().getCorrelationId());
         randomlyRunLong();
 
         return licenseRepository.findByOrganizationId(organizationId);
